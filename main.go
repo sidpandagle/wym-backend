@@ -38,7 +38,12 @@ func main() {
 		return c.JSON(body)
 	})
 
-	log.Fatal(app.Listen(":3000"))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // Fallback for local dev
+	}
+
+	log.Fatal(app.Listen(":" + port))
 }
 
 func goDotEnvVariable(key string) string {
