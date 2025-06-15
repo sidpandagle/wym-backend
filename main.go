@@ -15,6 +15,9 @@ func main() {
 	rzKey := goDotEnvVariable("RZKEY")
 	rzPass := goDotEnvVariable("RZPASS")
 
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Hello, World!")
+	})
 	app.Post("/order", func(c *fiber.Ctx) error {
 		payload := new(OrderRequest)
 		if err := c.BodyParser(payload); err != nil {
