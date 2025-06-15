@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 	razorpay "github.com/razorpay/razorpay-go"
 )
@@ -12,6 +13,10 @@ import (
 func main() {
 
 	app := fiber.New()
+
+	// Allow CORS for all origins
+	app.Use(cors.New())
+
 	rzKey := goDotEnvVariable("RZKEY")
 	rzPass := goDotEnvVariable("RZPASS")
 
