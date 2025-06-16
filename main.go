@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"math"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -27,7 +28,7 @@ type Payment struct {
 }
 
 type OrderRequest struct {
-	Amount int `json:"amount"`
+	Amount float64 `json:"amount"`
 }
 
 var mongoClient *mongo.Client
@@ -85,6 +86,8 @@ func main() {
 
 		client := razorpay.NewClient(rzKey, rzPass)
 
+		payload.Amount = math.Trunc(payload.Amount*100) / 100
+
 		data := map[string]interface{}{
 			"amount":   payload.Amount * 100,
 			"currency": "INR",
@@ -92,7 +95,7 @@ func main() {
 		}
 		body, err := client.Order.Create(data, nil)
 		if err != nil {
-			panic(err)
+			return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 		}
 		return c.JSON(body)
 	})
