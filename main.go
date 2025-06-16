@@ -24,7 +24,7 @@ type Payment struct {
 	Email     string `json:"email" bson:"email"`
 	Phone     string `json:"phone" bson:"phone"`
 	OrderID   string `json:"orderID" bson:"orderID"`
-	PaymentID string `json:"paymentID" bson:"empaymentID"`
+	PaymentID string `json:"paymentID" bson:"paymentID"`
 }
 
 type OrderRequest struct {
